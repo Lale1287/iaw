@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DataServiceService} from '../data.service';
-import {FileModel} from '../model/FileModel';
+import { FileControllerService, ModelFile } from '../openapi';
 
 @Component({
   selector: 'app-file-list',
@@ -8,10 +7,10 @@ import {FileModel} from '../model/FileModel';
   styleUrls: ['./file-list.component.css']
 })
 export class FileListComponent implements OnInit {
-  fileList: FileModel[] = [];
+  fileList: ModelFile[]=[];
 
-  constructor(private service: DataServiceService) {
-    this.service.getFileList().subscribe((lista) => {
+  constructor(private service: FileControllerService) {
+    this.service.fileControllerFind().subscribe((lista) => {
       this.fileList = lista
     })
   }
@@ -23,12 +22,14 @@ export class FileListComponent implements OnInit {
     return
   }
 
-  onEdit(aFile: FileModel) {
+  onEdit(aFile: ModelFile) {
 
   }
 
-  onRemove(aFile: FileModel) {
-    this.service.deleteFile(aFile)
+  onRemove(aFile: ModelFile) {
+    if(aFile.id){
+      this.service.fileControllerDeleteById(aFile.id).subscribe()
+    }
   }
 
 }

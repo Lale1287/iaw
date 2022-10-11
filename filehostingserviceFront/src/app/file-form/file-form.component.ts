@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DataServiceService} from '../data.service';
-import {FileModel} from '../model/FileModel';
+import {FileControllerService, ModelFile} from '../openapi';
 
 @Component({
   selector: 'app-file-form',
@@ -10,34 +9,39 @@ import {FileModel} from '../model/FileModel';
 })
 export class FileFormComponent implements OnInit {
 
-  model = new FileModel('');
+  model:ModelFile={
+    name:''
+  };
   idx = -1;
-  constructor(private router: Router, private service: DataServiceService, private route: ActivatedRoute) { }
+  constructor(private router: Router, private service: FileControllerService, private route: ActivatedRoute) { }
 
   onSubmit(): void {
     this.submitted = true;
     if (this.idx == -1) {
-      this.service.addFile(this.model);
+      this.service.fileControllerCreate(this.model).subscribe();
     }
   }
 
   ngOnInit() {
     const idxParam = this.route.snapshot.paramMap.get('idx');
-    idxParam ? this.idx = +idxParam : this.idx = -1;
+    idxParam? this.idx = +idxParam : this.idx = -1;
     if (this.idx == -1) {
-      this.model = new FileModel("");
+      this.model={
+        name:''
+      };
     } else {
-      this.service.getFileList().subscribe((l) => {
-        this.model = l[+this.idx]
-      }
-      )
+        this.service.fileControllerFind().subscribe((lista:ModelFile[]) => {
+          this.model = lista[+this.idx]
+        })
     }
   }
 
   submitted = false;
 
   newFile() {
-    this.model = new FileModel('');
+    this.model = {
+      name:''
+    };
   }
 
 
