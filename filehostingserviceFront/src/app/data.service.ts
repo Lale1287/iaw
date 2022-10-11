@@ -14,10 +14,14 @@ export class DataServiceService {
     return this.http.get<FileModel[]>(this.backendURL)
   }
   addFile(file: FileModel) {
-    this.http.post<FileModel>(this.backendURL, file)
+    this.http.post<FileModel>(this.backendURL,file).subscribe()
   }
   deleteFile(file: FileModel) {
-    this.http.delete<FileModel>(this.backendURL + "/" + file.id)
+    this.http.delete<FileModel>(this.backendURL + "/" + file.id).subscribe()
   }
+  //test
+  /*async addFile(file: FileModel) {
+    await this.http.post<FileModel>(this.backendURL,file).subscribe(()=>console.log("enviado"))
+  }*/
 }
 
