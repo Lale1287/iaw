@@ -19,6 +19,10 @@ export class FileFormComponent implements OnInit {
     this.submitted = true;
     if (this.idx == -1) {
       this.service.fileControllerCreate(this.model).subscribe();
+    } else{
+      if (this.model.id){
+        this.service.fileControllerUpdateById(this.model.id,this.model).subscribe()
+      }
     }
   }
 

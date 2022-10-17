@@ -21,7 +21,7 @@ export class FileListComponent implements OnInit {
   }
 
   onEdit(aFile: ModelFile) {
-
+    
   }
 
   onRemove(aFile: ModelFile) {
@@ -33,8 +33,8 @@ export class FileListComponent implements OnInit {
   }
 
   loadList(){
-  this.service.fileControllerFind().subscribe((lista) => {
-    this.fileList = lista
+    this.service.fileControllerFind().subscribe((lista) => {
+      this.fileList = lista
   })}
 
 }
