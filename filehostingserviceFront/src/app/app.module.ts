@@ -8,10 +8,12 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {FileFormComponent} from './file-form/file-form.component';
 import {FileListComponent} from './file-list/file-list.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'home', component: FileListComponent},
+  {path: 'home', component: HomeComponent},
+  {path: 'list-all', component: FileListComponent},
   {path: 'new-file', component: FileFormComponent},
   {path: 'modify/:idx', component: FileFormComponent}
 ];
@@ -20,7 +22,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     FileListComponent,
-    FileFormComponent
+    FileFormComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
